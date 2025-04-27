@@ -1,0 +1,5 @@
+# Feature positions for the XGBoost model
+SOURCE_POSITION = 0
+DESTINATION_POSITION = 1
+DISTANCE_POSITION = 1
+WEIGHT_POSITION = 2
