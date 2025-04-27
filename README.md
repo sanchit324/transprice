@@ -1,100 +1,98 @@
-# Transport Price Calculator with ML Model
+# Transport Price Calculator
 
-A React application that calculates transportation costs using an XGBoost ML model. This project combines a frontend built with React, TypeScript, and Tailwind CSS with a backend Express server that interfaces with a Python script for ML model inference.
+A React application that calculates transportation costs based on source, destination, distance, and weight, using machine learning for price prediction.
 
 ## Features
 
-- Calculate transport prices based on distance, weight, and location data
-- Uses a pre-trained ML model for accurate price predictions
-- Beautiful responsive UI with Tailwind CSS
-- Backend API using Express
-- Python integration for ML model inference
+- Interactive price calculator form
+- Machine learning-based price prediction
+- Responsive design with animations
+- Serverless API integration
+- Light/dark theme support
 
-## Prerequisites
+## Deployment
 
-- Node.js (v14 or higher)
+The application is deployed using Vercel, which provides:
+- Automatic deployment from GitHub
+- Serverless functions for the ML price prediction
+- Global CDN distribution
+- Zero configuration required
+
+### Deployment URLs
+
+- Production: [Your Vercel URL]
+
+## Local Development
+
+### Prerequisites
+
+- Node.js (v14 or later)
 - npm or yarn
-- Python 3.6 or higher
-- Required Python packages:
-  - joblib
-  - numpy
-  - scikit-learn
-  - xgboost
 
-## Installation
+### Getting Started
 
 1. Clone the repository
-2. Install JavaScript dependencies:
-
+```bash
+git clone [repository-url]
+cd [repository-name]
 ```
+
+2. Install dependencies
+```bash
 npm install
+# or
+yarn install
 ```
 
-3. Install Python dependencies:
-
-```
-pip install joblib numpy scikit-learn xgboost
-```
-
-## Running the Application
-
-To start the development server:
-
-```
+3. Start the development server
+```bash
 npm run dev
+# or
+yarn dev
 ```
 
-This will start:
-- The React frontend at http://localhost:5173
-- The Express API server at http://localhost:3001
+4. Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-## How It Works
+### Project Structure
 
-1. The frontend collects information about:
-   - Start and destination locations
-   - Distance (km)
-   - Weight (tonnes)
+- `/src` - React application source code
+- `/api` - Vercel serverless functions
+- `/scripts` - ML model scripts
+- `/public` - Static assets
 
-2. When calculating the price:
-   - The frontend sends a request to the Express server
-   - The server calls a Python script with the required parameters
-   - The Python script loads the ML model and makes a prediction
-   - The result is sent back to the frontend
+## Serverless API
 
-3. The ML model takes three parameters:
-   - Distance (km)
-   - Weight (tonnes)
-   - Demand (calculated from location factors)
+The application uses Vercel Serverless Functions to handle the machine learning price prediction. The serverless function in `api/predict-price.js` implements the same logic as the Python script in `scripts/predict.py`.
 
-## ML Model
+### API Endpoints
 
-The application uses an XGBoost model (`xgboost_model.joblib`) trained on historical transportation data. The model generates price predictions based on distance, weight, and demand factors.
+- `POST /api/predict-price`: Predicts the price based on source, destination, distance, and weight.
 
-## Project Structure
+  Request body:
+  ```json
+  {
+    "source": "KYN",
+    "destination": "DHI",
+    "distance": 1000,
+    "weight": 500,
+    "sourceFactor": 1.2,
+    "destFactor": 1.2
+  }
+  ```
 
-- `src/` - Frontend React code
-  - `components/` - React components
-  - `utils/` - Utility functions including ML calculator
-  - `data/` - Location data
-- `scripts/` - Python scripts for ML inference
-- `server.cjs` - Express server for the backend API
-- `xgboost_model.joblib` - The ML model file
+  Response:
+  ```json
+  {
+    "price": 0.12345
+  }
+  ```
 
-## Building for Production
+## Deployment to Vercel
 
-To build the application for production:
+1. Push changes to GitHub
+2. Connect your GitHub repository to Vercel
+3. Vercel automatically deploys changes on push to the main branch
 
-```
-npm run build
-npm start
-```
+## License
 
-This will build the React app and start the Express server which serves both the static frontend files and the API endpoints.
-
-## Notes
-
-- The demand parameter is derived from location factors
-- If the ML prediction fails, the application falls back to a formula-based calculation
-- The ML model expects positive values for all parameters
-
-Made with ❤️ by Sanchit 
+[Your License Here] 

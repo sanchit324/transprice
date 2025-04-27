@@ -8,6 +8,22 @@ interface ModelResponse {
 }
 
 /**
+ * Determine the base API URL based on environment
+ * In development, use the local server
+ * In production (Vercel), use the deployed API
+ */
+const getApiUrl = () => {
+  // In development mode (running locally)
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    // Use local server
+    return '';
+  }
+  
+  // In production (Vercel)
+  return window.location.origin;
+};
+
+/**
  * Calculate transportation price using the ML model
  * The model takes source, destination, distance, weight, and location factors as inputs
  * 
@@ -34,8 +50,11 @@ export const calculatePriceWithML = async (
       destFactor: destLocation.costFactor
     };
     
+    // Get the appropriate API URL for the current environment
+    const apiUrl = getApiUrl();
+    
     // Call the API endpoint that will run the ML model
-    const response = await fetch('/api/predict-price', {
+    const response = await fetch(`${apiUrl}/api/predict-price`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -44,7 +63,9 @@ export const calculatePriceWithML = async (
     });
     
     if (!response.ok) {
-      throw new Error('Failed to get prediction from ML model');
+      const errorText = await response.text();
+      console.error('API response error:', errorText);
+      throw new Error(`Failed to get prediction from ML model: ${response.status} ${response.statusText}`);
     }
     
     const result: ModelResponse = await response.json();
