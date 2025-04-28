@@ -4,6 +4,7 @@ import AppHeader from './components/AppHeader';
 import AppFooter from './components/AppFooter';
 import { motion } from 'framer-motion';
 import { GridBackground, WaveBackground } from './components/ui/background';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -46,7 +47,7 @@ function App() {
         </div>
       </main>
       
-      <AppFooter />
+      <Footer />
     </div>
   );
 }

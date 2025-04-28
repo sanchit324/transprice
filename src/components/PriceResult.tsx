@@ -84,7 +84,6 @@ const PriceResult: React.FC<PriceResultProps> = ({
               >
                 <p className="text-sm text-slate-500 mb-2">Total Price</p>
                 <div className="flex items-center justify-center text-3xl font-bold text-indigo-700 mb-1">
-                  <IndianRupee className="h-6 w-6 mr-2" />
                   {formatCurrency(price)}
                 </div>
                 <p className="text-xs text-slate-500">
